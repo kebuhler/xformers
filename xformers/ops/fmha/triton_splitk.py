@@ -302,12 +302,6 @@ class FwOp(AttentionFwOpBase):
                 reasons.append(
                     f"Variable query len is not supported for local masks: got {seqinfo.max_seqlen=} {seqinfo.min_seqlen=}."
                 )
-        if q_len > 16 and (is_causal or is_local):
-            # 16 is the minimum BLOCK_M which gets used
-            # XXX I don't really understand why this is needed.
-            reasons.append(
-                "Query length should not be larger than 16 for causal or local attention biases"
-            )
 
         if is_paged:
             page_size = d.attn_bias.page_size  # type: ignore
